@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-payment
+  labels:
+    app: spring-payment
+spec:
+  selector:
+    app: spring-payment
+  ports:
+    - port: 80
+      targetPort: 8090
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-payment
+  labels:
+    app: spring-payment
+spec:
+  selector:
+    matchLabels:
+      app: spring-payment
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: spring-payment
+        tier: frontend
+    spec:
+      containers:
+        - image: slcregistry.azurecr.io/poc-sloc:9
+          name: spring-payment
+          env:
+            - name: JDBC_DATABASE_URL
+              value: jdbc:postgresql://slc-db.postgres.database.azure.com:5432/banco?gssEncMode=disable
+            - name: JDBC_DATABASE_USERNAME
+              value: spring@slc-db
+            - name: JDBC_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgress-pass
+                  key: password
+          volumeMounts:
+            - name: azure-payment
+              mountPath: /opt/payment/file
+          ports:
+            - containerPort: 8090
+              name: spring-payment
+      volumes:
+        - name: azure-payment
+          azureDisk:
+            kind: Managed
+            diskName: myAKSDisk
+            diskURI: /subscriptions/OPA/resourceGroups/MC_SlcGroup_SlcCluster_brazilsouth/providers/Microsoft.Compute/disks/myAKSDisk
