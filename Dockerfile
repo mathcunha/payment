@@ -11,6 +11,6 @@ FROM mcr.microsoft.com/java/jdk:8-zulu-alpine
 COPY --from=build-env /app/BOOT-INF/lib /app/lib
 COPY --from=build-env /app/META-INF /app/META-INF
 COPY --from=build-env /app/BOOT-INF/classes /app
-VOLUME /opt/silocarquivos
+VOLUME /opt/payment/file
 EXPOSE 8098/tcp
 ENTRYPOINT ["java","-cp","app:app/lib/*","com.bank.payment.PagamentoApplication"]
