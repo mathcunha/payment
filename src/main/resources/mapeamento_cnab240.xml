@@ -1,0 +1,23 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+    <stream name="file_cnab240_strem" format="fixedlength" strict="true" ignoreUnidentifiedRecords="true">
+
+        <record name="ArquivoCip" class="com.bank.payment.domain.ArquivoCip" minOccurs="1" maxOccurs="1" maxLength="240">
+            <field name="name" position="0" length="150" />
+            <field name="total" position="150" length="90" />
+        </record>
+
+        <group name="groupRecords">
+            <record name="LoteHeader" class="com.bank.payment.domain.Lote" maxLength="240">
+                <field name="status" position="0" length="240" />
+            </record>
+            <record name="Pagamento" class="com.bank.payment.domain.Pagamento" maxLength="240">
+                <field name="valor" position="0" length="120" />
+                <field name="conta" position="120" length="60" />
+                <field name="agencia" position="180" length="60" />
+            </record>
+        </group>
+    </stream>
+
+</beanio>
