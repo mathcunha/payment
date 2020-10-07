@@ -19,5 +19,5 @@ steps:
 - task: Docker@2
   displayName: buildAndPush
   inputs:
-    containerRegistry: 'poc-sloc-CI-CD'
-    repository: 'poc-sloc'
+    containerRegistry: 'paybankregistry'
+    repository: 'pay-bank-app'
