@@ -31,17 +31,17 @@ spec:
         tier: frontend
     spec:
       containers:
-        - image: slcregistry.azurecr.io/poc-sloc:9
+        - image: paybankregistry.azurecr.io/pay-bank-app:latest
           name: spring-payment
           env:
             - name: JDBC_DATABASE_URL
-              value: jdbc:postgresql://slc-db.postgres.database.azure.com:5432/banco?gssEncMode=disable
+              value: jdbc:postgresql://pay-bank-db.postgres.database.azure.com:5432/banco?gssEncMode=disable
             - name: JDBC_DATABASE_USERNAME
-              value: spring@slc-db
+              value: spring@pay-bank-db
             - name: JDBC_DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgress-pass
+                  name: postgres-pass
                   key: password
           volumeMounts:
             - name: azure-payment
@@ -54,4 +54,4 @@ spec:
           azureDisk:
             kind: Managed
             diskName: myAKSDisk
-            diskURI: /subscriptions/OPA/resourceGroups/MC_SlcGroup_SlcCluster_brazilsouth/providers/Microsoft.Compute/disks/myAKSDisk
+            diskURI: /subscriptions/<subscription>/resourceGroups/MC_pay-bank-grp_pay-bank-cluster_brazilsouth/providers/Microsoft.Compute/disks/myAKSDisk
