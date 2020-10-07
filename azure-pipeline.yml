@@ -19,5 +19,5 @@ steps:
 - task: Docker@2
   displayName: buildAndPush
   inputs:
-    containerRegistry: 'paybankregistry-CI-CD'
+    containerRegistry: 'paybankregistry-pipeline'
     repository: 'pay-bank-app'
